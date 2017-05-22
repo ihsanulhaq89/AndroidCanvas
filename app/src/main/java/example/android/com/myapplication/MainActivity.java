@@ -29,7 +29,7 @@ public class MainActivity extends Activity implements View.OnLayoutChangeListene
     private void setScaleFactors() {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         float px = 4 * metrics.xdpi;
-        float py = 4 * metrics.ydpi;
+        float py = 8 * metrics.ydpi;
 
         SCALE_X = ((double) cardLayout.getWidth()) / px;
         SCALE_Y = ((double) cardLayout.getHeight()) / py;
