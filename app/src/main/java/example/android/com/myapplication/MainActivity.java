@@ -3,19 +3,19 @@ package example.android.com.myapplication;
 import android.app.Activity;
 import android.graphics.Color;
 import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
 public class MainActivity extends Activity implements View.OnLayoutChangeListener {
 
     FrameLayout cardLayout;
-    final double FRAME_X = 200;
-    final double FRAME_Y = 200;
+    private double SCALE_X;
+    private double SCALE_Y;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,19 +26,20 @@ public class MainActivity extends Activity implements View.OnLayoutChangeListene
 
     }
 
-    double getScaleX() {
-        return ((double) cardLayout.getWidth()) / FRAME_X;
-    }
+    private void setScaleFactors() {
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+        float px = 4 * metrics.xdpi;
+        float py = 4 * metrics.ydpi;
 
-    double getScaleY() {
-        return ((double) cardLayout.getHeight()) / FRAME_Y;
+        SCALE_X = ((double) cardLayout.getWidth()) / px;
+        SCALE_Y = ((double) cardLayout.getHeight()) / py;
     }
 
     private void addImage(@ColorInt int resource, double x, double y, double w, double h) {
         ImageView image = createImage(resource);
-        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (w * getScaleX()), (int) (h * getScaleY()));
-        params.leftMargin = (int) (x * getScaleX());
-        params.topMargin = (int) (y * getScaleY());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams((int) (w * SCALE_X), (int) (h * SCALE_Y));
+        params.leftMargin = (int) (x * SCALE_X);
+        params.topMargin = (int) (y * SCALE_Y);
         image.setLayoutParams(params);
         cardLayout.addView(image);
 
@@ -53,8 +54,9 @@ public class MainActivity extends Activity implements View.OnLayoutChangeListene
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         cardLayout.removeOnLayoutChangeListener(this);
-        Toast.makeText(this, "Canvas W= " + cardLayout.getWidth() + " H= " + cardLayout.getHeight() + " DPI=" + getResources().getDisplayMetrics().density, Toast.LENGTH_LONG).show();
-        addImage(Color.RED, 50, 50, 50, 50);
+        setScaleFactors();
+        Toast.makeText(this, "Canvas W= " + cardLayout.getWidth() + " H= " + cardLayout.getHeight() , Toast.LENGTH_LONG).show();
+        addImage(Color.RED, 50, 50, 50, 50); //
         addImage(Color.GREEN, 100, 100, 100, 100);
     }
 }
