@@ -6,13 +6,16 @@
     android:layout_height="match_parent"
     tools:context="example.android.com.myapplication.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/card_layout"
+    <example.android.com.myapplication.ZoomLayout
+        android:id="@+id/zoom_layout"
         android:background="@android:color/holo_blue_light"
         android:layout_margin="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/card_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></FrameLayout>
+    </example.android.com.myapplication.ZoomLayout>
 
 </RelativeLayout>
