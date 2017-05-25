@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 public class ZoomLayout extends FrameLayout {
-    private float scale = 1.5f;
-
     public ZoomLayout(Context context) {
         super(context);
     }
@@ -22,29 +20,27 @@ public class ZoomLayout extends FrameLayout {
         super(context, attrs, defStyle);
     }
 
-    public void applyScaleAndTranslation(View cardLayout, View childView) {
+    public void applyScaleAndTranslation(View cardLayout2, View childView) {
+        float CENTER_X_SCREEN = this.getWidth() / 2.0f;
+        float SCALE = 1.5f;
 
-        int centerX = cardLayout.getWidth() / 2;
-        int centerY = cardLayout.getHeight() / 2;
+        float y = cardLayout2.getHeight();
+        float y2 = y * SCALE;
+        float y3 = childView.getY() * SCALE;
 
-        float dx = centerX - (childView.getX() + childView.getWidth() / 2);
-        float dy = centerY - (childView.getY() + childView.getHeight() / 2);
+        float _dx = SCALE * (CENTER_X_SCREEN - (childView.getX() + ((float) childView.getWidth() / 2.0f)));
+        float _dy = ((y2 - y) / 2.0f) - y3;
 
-        executeAnimations(dx, dy);
-    }
-
-    private void executeAnimations(float _dx, float _dy){
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(child(), "scaleX", scale);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(child(), "scaleY", scale);
-        ObjectAnimator transX = ObjectAnimator.ofFloat(child(), "translationX", child().getX(), _dx * scale);
-        ObjectAnimator transY = ObjectAnimator.ofFloat(child(), "translationY", child().getY(), _dy * scale);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(cardLayout2, "scaleX", SCALE);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(cardLayout2, "scaleY", SCALE);
+        ObjectAnimator transX = ObjectAnimator.ofFloat(cardLayout2, "translationX", _dx);
+        ObjectAnimator transY = ObjectAnimator.ofFloat(cardLayout2, "y", _dy);
         AnimatorSet anim = new AnimatorSet();
-        anim.play(scaleX).with(scaleY).with(transX).with(transY);
+        anim.play(transX)
+                .with(transY)
+                .with(scaleX)
+                .with(scaleY);
+        anim.setDuration(2000);
         anim.start();
-    }
-
-
-    private View child() {
-        return getChildAt(0);
     }
 }
