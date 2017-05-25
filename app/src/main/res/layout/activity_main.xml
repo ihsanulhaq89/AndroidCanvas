@@ -8,9 +8,9 @@
 
     <example.android.com.myapplication.ZoomLayout
         android:id="@+id/zoom_layout"
-        android:background="@android:color/holo_blue_light"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -19,13 +19,12 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"></RelativeLayout>
+
             <FrameLayout
-                android:background="@android:color/background_light"
-                android:layout_below="@+id/container"
                 android:id="@+id/card_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></FrameLayout>
-
+                android:layout_height="match_parent"
+                android:layout_below="@+id/container"></FrameLayout>
 
         </RelativeLayout>
     </example.android.com.myapplication.ZoomLayout>
