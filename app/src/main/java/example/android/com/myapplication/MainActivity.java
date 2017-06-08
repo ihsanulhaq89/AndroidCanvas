@@ -65,8 +65,9 @@ public class MainActivity extends Activity implements View.OnLayoutChangeListene
         cardLayout.removeOnLayoutChangeListener(this);
         setScaleFactors();
         Toast.makeText(this, "Canvas W= " + cardLayout.getWidth() + " H= " + cardLayout.getHeight(), Toast.LENGTH_LONG).show();
-        addImage(Color.RED, 50, 50, 50, 50); //
-        addImage(Color.GREEN, 100, 100, 100, 100);
+        addImage(Color.RED, 50, 50, 100, 150); //
+        addImage(Color.GREEN, 200, 200, 100, 500);
+        addImage(Color.BLUE, 700, 100, 100, 500);
     }
 
     @Override

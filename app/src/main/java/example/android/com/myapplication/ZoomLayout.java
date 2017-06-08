@@ -21,8 +21,16 @@ public class ZoomLayout extends FrameLayout {
     }
 
     public void applyScaleAndTranslation(View cardLayout, View childView) {
+
+        float SCALE = 1.0f;
+
+        float XASPECT_RATIO = (float) this.getWidth() / childView.getWidth();
+        float YASPECT_RATIO = (float) this.getHeight() / childView.getHeight();
+
+        SCALE = XASPECT_RATIO < YASPECT_RATIO ? XASPECT_RATIO : YASPECT_RATIO;
+
+
         float CENTER_X_SCREEN = this.getWidth() / 2.0f;
-        float SCALE = 1.5f;
 
         float y = cardLayout.getHeight();
         float y2 = y * SCALE;
